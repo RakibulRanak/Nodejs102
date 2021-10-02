@@ -6,6 +6,7 @@ const HOST = process.env.HOST || 'localhost';
 
 // Importing the express app
 const app = require('./app');
+const db = require('./db');
 
 // Starting the server
 const server = app.listen(PORT, HOST, () => {

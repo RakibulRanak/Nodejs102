@@ -2,6 +2,7 @@
 // Imports
 const express = require('express');
 const morgan = require('morgan');
+const association = require('./association/association');
 
 // Creating the express app
 const app = express();
