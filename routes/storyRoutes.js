@@ -1,0 +1,12 @@
+const express = require('express');
+const router = express.Router();
+const storyController = require('../controllers/storyController');
+
+
+router.post('/',storyController.createStory);
+router.get('/:id', storyController.getStory);
+router.get('/', storyController.getStories);
+router.put('/:id', storyController.updateStory);
+router.delete('/:id',storyController.deleteStory);
+
+module.exports = router

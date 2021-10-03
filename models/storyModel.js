@@ -4,6 +4,14 @@ const { DataTypes } = require('sequelize');
 
 
 const Story = sequelize.define('story', {
+    username: {
+        type: DataTypes.STRING,
+        noUpdate: true,
+        allowNull: false,
+        validate: {
+            notEmpty: true
+        }
+    },
     title: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -13,13 +21,6 @@ const Story = sequelize.define('story', {
     },
     story : {
         type: DataTypes.TEXT,
-        allowNull: false,
-        validate: {
-            notEmpty: true
-        }
-    },
-    post_date: {
-        type: DataTypes.DATE,
         allowNull: false,
         validate: {
             notEmpty: true

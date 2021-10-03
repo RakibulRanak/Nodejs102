@@ -2,7 +2,8 @@
 // Imports
 const express = require('express');
 const morgan = require('morgan');
-const association = require('./association/association');
+const storyRoutes = require('./routes/storyRoutes')
+//const association = require('./association/association');
 
 // Creating the express app
 const app = express();
@@ -13,8 +14,10 @@ app.use(express.json({ limit: '1000kb' }));
 
 app.use(morgan('dev'));
 
+app.use('/api/v1/stories', storyRoutes);
+
 app.get('/api/v1', (req, res) => {
-  res.send('Hello');
+  res.send('Welcome to home page!');
 });
 
 app.all('*', (req, res, next) => {
