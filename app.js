@@ -3,6 +3,8 @@
 const express = require('express');
 const morgan = require('morgan');
 const storyRoutes = require('./routes/storyRoutes')
+const globalErrorHandler = require('./error/errorHandler');
+const AppError = require('./error/appError');
 //const association = require('./association/association');
 
 // Creating the express app
@@ -21,8 +23,10 @@ app.get('/api/v1', (req, res) => {
 });
 
 app.all('*', (req, res, next) => {
-    res.send(`Can't find ${req.originalUrl} on this server!`);
+    return next(new AppError(`Can't find ${req.originalUrl} on this server!`,404));
 });
+
+app.use(globalErrorHandler)
 
 // Exporting the app
 module.exports = app;

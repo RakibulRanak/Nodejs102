@@ -7,7 +7,7 @@ const sendError = (err, res) => {
   if (err.isOperational) {
     res
       .status(err.statusCode)
-      .json({ message: err.message, status: err.status });
+      .json({status: err.status, message: err.message });
   } else {
     res.status(500).json({ status: 'error', message: 'Something went wrong!' });
   }
