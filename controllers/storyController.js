@@ -14,24 +14,14 @@ const sendXmlResponse = (req, res, statusCode, data) => {
     return res.status(statusCode).send(js2xmlparser.parse("data", data));
 };
 
-const sendDefaultResponse = (req, res, statusCode) => {
-    return res.status(statusCode).send(`<html>
-                <body>
-                    accept content-type doesn't match any    
-                </body>
-        </html>`
-    );
-};
-
 exports.createStory = catchAsync(async (req, res, next) => {
     let story;
     await Story.create(req.body).then((resultEntity) => {
         story = resultEntity.get({ plain: true })
     });
     res.format({
-        'application/json': () => sendJsonResponse(req, res, 201, 'success', 'Story created successfully', story),
-        'application/xml': () => sendXmlResponse(req, res, 201, story),
-        'default': () => sendDefaultResponse(req, res, 201)
+        'default': () => sendJsonResponse(req, res, 201, 'success', 'Story created successfully', story),
+        'application/xml': () => sendXmlResponse(req, res, 201, story)
     });
 });
 
@@ -44,9 +34,8 @@ exports.getStory = catchAsync(async (req, res, next) => {
         return next(new AppError(`Not found`, 404));
     }
     res.format({
-        'application/json': () => sendJsonResponse(req, res, 200, 'success', 'Story fetched successfully', story),
+        'default': () => sendJsonResponse(req, res, 200, 'success', 'Story fetched successfully', story),
         'application/xml': () => sendXmlResponse(req, res, 200, story),
-        'default': () => sendDefaultResponse(req, res, 200)
     });
 
 });
@@ -54,28 +43,30 @@ exports.getStory = catchAsync(async (req, res, next) => {
 exports.getStories = catchAsync(async (req, res, next) => {
     const stories = await Story.findAll({ raw: true, attributes: ['id', 'title', 'story', ['username', 'author'], 'createdAt'] });
     res.format({
-        'application/json': () => sendJsonResponse(req, res, 200, 'success', 'Stories fetched successfully', stories),
+        'default': () => sendJsonResponse(req, res, 200, 'success', 'Stories fetched successfully', stories),
         'application/xml': () => sendXmlResponse(req, res, 200, stories),
-        'default': () => sendDefaultResponse(req, res, 200)
     });
 });
 
 exports.updateStory = catchAsync(async (req, res, next) => {
-    story = await Story.update(req.body, { raw: true, returning: true, where: { id: req.params.id } });
-    res.format({
-        'application/json': () => sendJsonResponse(req, res, 200, 'success', 'Story updated successfully', story[1][0]),
-        'application/xml': () => sendXmlResponse(req, res, 200, story[1][0]),
-        'default': () => sendDefaultResponse(req, res, 200)
-    });
+    story = await Story.update(req.body, { raw: true, returning: true, where: { id: req.params.id } })
+    if (story[0]) {
+        res.format({
+            'default': () => sendJsonResponse(req, res, 200, 'success', 'Story updated successfully', story[1][0]),
+            'application/xml': () => sendXmlResponse(req, res, 200, story[1][0]),
+        });
+    }
+    else {
+        return next(new AppError(`Story not found`, 404));
+    }
 });
 
 exports.deleteStory = catchAsync(async (req, res, next) => {
     await Story.destroy({ where: { id: req.params.id } }).then((rowDeleted) => {
         if (rowDeleted) {
             res.format({
-                'application/json': () => sendJsonResponse(req, res, 200, 'success', 'Story deleted successfully', ''),
+                'default': () => sendJsonResponse(req, res, 200, 'success', 'Story deleted successfully', ''),
                 'application/xml': () => sendXmlResponse(req, res, 200, 'story deleted successfully'),
-                'default': () => sendDefaultResponse(req, res, 200)
             });
         }
         else {
