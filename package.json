@@ -1,5 +1,5 @@
 {
-  "name": "nodejs102",
+  "name": "simple-web-api-learning-with-express",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -24,8 +24,7 @@
     "js2xmlparser": "^4.0.1",
     "morgan": "^1.10.0",
     "pg": "^8.7.1",
-    "sequelize": "^6.6.5",
-    "xml": "^1.0.1"
+    "sequelize": "^6.6.5"
   },
   "devDependencies": {
     "nodemon": "^2.0.13"

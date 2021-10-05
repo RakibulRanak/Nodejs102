@@ -24,7 +24,10 @@ const sendDefaultResponse = (req, res, statusCode) => {
 };
 
 exports.createStory = catchAsync(async (req, res, next) => {
-    const story = await Story.create(req.body);
+    let story;
+    await Story.create(req.body).then((resultEntity) => {
+        story = resultEntity.get({ plain: true })
+    });
     res.format({
         'application/json': () => sendJsonResponse(req, res, 201, 'success', 'Story created successfully', story),
         'application/xml': () => sendXmlResponse(req, res, 201, story),
@@ -58,7 +61,7 @@ exports.getStories = catchAsync(async (req, res, next) => {
 });
 
 exports.updateStory = catchAsync(async (req, res, next) => {
-    story = await Story.update(req.body, { returning: true, where: { id: req.params.id } });
+    story = await Story.update(req.body, { raw: true, returning: true, where: { id: req.params.id } });
     res.format({
         'application/json': () => sendJsonResponse(req, res, 200, 'success', 'Story updated successfully', story[1][0]),
         'application/xml': () => sendXmlResponse(req, res, 200, story[1][0]),
