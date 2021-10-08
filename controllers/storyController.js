@@ -1,18 +1,10 @@
 const catchAsync = require('../errors/catchAsync');
 const Story = require('../models/storyModel');
 const AppError = require('../errors/appError');
-const js2xmlparser = require("js2xmlparser");
+const { sendJsonResponse, sendXmlResponse } = require("../utils/sendResponse");
 
-const sendJsonResponse = (req, res, statusCode, status, message, data) => {
-    return res.status(statusCode).json({
-        status,
-        message,
-        data,
-    });
-};
-const sendXmlResponse = (req, res, statusCode, data) => {
-    return res.status(statusCode).send(js2xmlparser.parse("data", data));
-};
+
+console.log(typeof (sendJsonResponse))
 
 exports.createStory = catchAsync(async (req, res, next) => {
     let story;
@@ -27,7 +19,6 @@ exports.createStory = catchAsync(async (req, res, next) => {
 
 exports.getStory = catchAsync(async (req, res, next) => {
     const story = await Story.findOne({
-        raw: true,
         where: { id: req.params.id }, attributes: ['id', 'title', 'story', ['username', 'author'], 'createdAt']
     });
     if (story == null) {
@@ -41,7 +32,7 @@ exports.getStory = catchAsync(async (req, res, next) => {
 });
 
 exports.getStories = catchAsync(async (req, res, next) => {
-    const stories = await Story.findAll({ raw: true, attributes: ['id', 'title', 'story', ['username', 'author'], 'createdAt'] });
+    const stories = await Story.findAll({ attributes: ['id', 'title', 'story', ['username', 'author'], 'createdAt'] });
     res.format({
         'default': () => sendJsonResponse(req, res, 200, 'success', 'Stories fetched successfully', stories),
         'application/xml': () => sendXmlResponse(req, res, 200, stories),
