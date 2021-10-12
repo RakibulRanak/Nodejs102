@@ -1,9 +1,10 @@
 const catchAsync = require('../errors/catchAsync');
 const Story = require('../models/storyModel');
 const AppError = require('../errors/appError');
+const storyService = require('../services/storyService');
 
 exports.createStory = catchAsync(async (req, res, next) => {
-    const story = await Story.create(req.body);
+    const story = await storyService.createStory(req.body)
     res.status(201).json({
         status: 'success',
         message: 'Story is created successfully',
@@ -11,13 +12,8 @@ exports.createStory = catchAsync(async (req, res, next) => {
     });
 });
 
-
-
 exports.getStory = catchAsync(async (req, res, next) => {
-    const story = await Story.findOne({ where: { id: req.params.id } });
-    if (story == null) {
-        return next(new AppError(`Not found`, 404));
-    }
+    const story = await storyService.getStory(req.params.id);
     res.status(200).json({
         status: 'success',
         message: 'Story fetched successfully',
@@ -26,7 +22,7 @@ exports.getStory = catchAsync(async (req, res, next) => {
 });
 
 exports.getStories = catchAsync(async (req, res, next) => {
-    const stories = await Story.findAll();
+    const stories = await storyService.getStories();
     res.status(200).json({
         status: 'success',
         message: 'Stories fetched successfully',
@@ -35,25 +31,15 @@ exports.getStories = catchAsync(async (req, res, next) => {
 });
 
 exports.updateStory = catchAsync(async (req, res, next) => {
-    story = await Story.update(req.body, { returning: true, where: { id: req.params.id } });
+    const storyUpdated = await storyService.updateStory(req.params.id, req.body);
     res.status(200).json({
         status: 'success',
         message: 'Story updated successfully',
-        data: story[1][0]
+        data: storyUpdated
     });
 });
 
 exports.deleteStory = catchAsync(async (req, res, next) => {
-    await Story.destroy({ where: { id: req.params.id } }).then((rowDeleted) => {
-        if (rowDeleted) {
-            res.status(200).json({
-                status: 'success',
-                message: "Successfully deleted"
-            })
-        }
-        else {
-            return next(new AppError(`Story not found`, 404));
-        }
-    });
-
+    await storyService.deleteStory(req.params.id);
+    res.status(204).send();
 });
