@@ -1,7 +1,7 @@
 const catchAsync = require('../errors/catchAsync');
-const Story = require('../models/storyModel');
 const AppError = require('../errors/appError');
-const storyService = require('../services/storyService');
+const { StoryService } = require('../services/storyService');
+const storyService = new StoryService();
 
 exports.createStory = catchAsync(async (req, res, next) => {
     const story = await storyService.createStory(req.body)

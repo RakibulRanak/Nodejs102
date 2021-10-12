@@ -4,11 +4,13 @@ const AppError = require('./appError');
 
 
 const sendError = (err, res) => {
+  //console.log(err.stack)
   if (err.isOperational) {
     res
       .status(err.statusCode)
-      .json({status: err.status, message: err.message });
+      .json({ status: err.status, message: err.message });
   } else {
+
     res.status(500).json({ status: 'error', message: 'Something went wrong!' });
   }
 };
@@ -23,7 +25,7 @@ const errorHandler = (err, req, res, next) => {
   let error = { ...err };
   error.message = err.message;
   sendError(error, res);
- 
+
 };
 
 module.exports = errorHandler;

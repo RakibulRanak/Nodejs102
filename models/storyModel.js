@@ -1,8 +1,6 @@
 const sequelize = require('../db');
 const { DataTypes } = require('sequelize');
 
-
-
 const Story = sequelize.define('story', {
     username: {
         type: DataTypes.STRING,
@@ -19,7 +17,7 @@ const Story = sequelize.define('story', {
             notEmpty: true
         }
     },
-    story : {
+    story: {
         type: DataTypes.TEXT,
         allowNull: false,
         validate: {

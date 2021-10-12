@@ -1,34 +1,23 @@
-const Story = require('../models/storyModel');
-const AppError = require('../errors/appError');
+const { PgStoryService } = require('./pgStoryService');
+const { MgStoryService } = require('./mgStoryService');
 
-exports.createStory = async (storyBody) => {
-    const story = await Story.create(storyBody);
-    console.log(story);
-    return story;
-};
 
-exports.getStory = async (storyId) => {
-    const story = await Story.findOne({ where: { id: storyId } });
-    if (!story) throw new AppError(`Story not found`, 404);
-    return story;
-};
+class StoryService {
+    constructor() {
+        if (this.service)
+            return this.service;
+        else {
+            if (process.env.DB == 'postgres')
+                this.service = new PgStoryService();
+            else
+                this.service = new MgStoryService();
+        };
+    }
+    createStory(storyBody) { return this.service.createStory(storyBody) };
+    getStory(storyId) { return this.service.getStory(storyId) };
+    getStories() { return this.service.getStories() };
+    updateStory(storyId, updateBody) { return this.service.updateStory(storyId, updateBody) };
+    deleteStory(storyId) { return this.service.deleteStory(storyId) };
+}
 
-exports.getStories = async (req, res, next) => {
-    const stories = await Story.findAll();
-    if (stories[0] == null) throw new AppError(`No story found`, 404);
-    return stories;
-};
-
-exports.updateStory = async (storyId, updateBody) => {
-    storyUpdated = await Story.update(updateBody, { returning: true, where: { id: storyId } });
-    if (!storyUpdated[0])
-        throw new AppError(`Story not found`, 404);
-    return storyUpdated[1][0];
-};
-
-exports.deleteStory = async (storyId) => {
-    const storyDeleted = await Story.destroy({ where: { id: storyId } });
-    if (!storyDeleted)
-        throw new AppError(`Story not found`, 404);
-    return;
-};
+module.exports = { StoryService };
