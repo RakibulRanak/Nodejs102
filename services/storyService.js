@@ -3,7 +3,6 @@ const AppError = require('../errors/appError');
 
 exports.createStory = async (storyBody) => {
     const story = await Story.create(storyBody);
-    console.log(story);
     return story;
 };
 
