@@ -1,9 +1,10 @@
 const catchAsync = require('../errors/catchAsync');
-const AppError = require('../errors/appError');
 const { StoryService } = require('../services/storyService');
-const storyService = new StoryService();
+const { PgStoryDao } = require('../data/dao/pgStoryDao');
+const storyService = new StoryService(new PgStoryDao());
 
 exports.createStory = catchAsync(async (req, res, next) => {
+
     const story = await storyService.createStory(req.body)
     res.status(201).json({
         status: 'success',

@@ -4,7 +4,7 @@ const AppError = require('./appError');
 
 
 const sendError = (err, res) => {
-  //console.log(err.stack)
+  console.log(err.stack)
   if (err.isOperational) {
     res
       .status(err.statusCode)
