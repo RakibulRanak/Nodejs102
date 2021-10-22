@@ -3,7 +3,6 @@ const AppError = require('../errors/appError');
 
 exports.createStory = async (storyBody) => {
     const story = await Story.create(storyBody);
-    console.log(story);
     return story;
 };
 
@@ -14,7 +13,11 @@ exports.getStory = async (storyId) => {
 };
 
 exports.getStories = async (req, res, next) => {
-    const stories = await Story.findAll();
+    const stories = await Story.findAll({
+        order: [
+            ['createdAt', 'DESC']
+        ]
+    });
     if (stories[0] == null) throw new AppError(`No story found`, 404);
     return stories;
 };
