@@ -21,8 +21,10 @@
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "express-validator": "^6.13.0",
     "js2xmlparser": "^4.0.1",
     "morgan": "^1.10.0",
+    "node-dependency-injection": "^2.7.1",
     "pg": "^8.7.1",
     "sequelize": "^6.6.5"
   },

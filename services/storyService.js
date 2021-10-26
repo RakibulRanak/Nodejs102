@@ -1,34 +1,30 @@
-const Story = require('../models/storyModel');
-const AppError = require('../errors/appError');
+class StoryService {
+    constructor(storyDao) {
+        this.storyDao = storyDao;
+    }
+    createStory = async (storyBody) => {
+        const story = await this.storyDao.createStory(storyBody);
+        return story;
+    };
+    getStory = async (storyId) => {
+        const story = await this.storyDao.getStory(storyId);
+        return story;
+    };
 
-exports.createStory = async (storyBody) => {
-    const story = await Story.create(storyBody);
-    console.log(story);
-    return story;
-};
+    getStories = async (req) => {
+        const stories = await this.storyDao.getStories(req);
+        return stories;
+    };
+    updateStory = async (storyId, updateBody) => {
+        const storyUpdated = await this.storyDao.updateStory(storyId, updateBody);
+        return storyUpdated;
+    };
 
-exports.getStory = async (storyId) => {
-    const story = await Story.findOne({ where: { id: storyId } });
-    if (!story) throw new AppError(`Story not found`, 404);
-    return story;
-};
+    deleteStory = async (storyId) => {
+        const storyDeleted = await this.storyDao.deleteStory(storyId);
+        return;
+    };
+}
 
-exports.getStories = async (req, res, next) => {
-    const stories = await Story.findAll();
-    if (stories[0] == null) throw new AppError(`No story found`, 404);
-    return stories;
-};
+module.exports = { StoryService };
 
-exports.updateStory = async (storyId, updateBody) => {
-    storyUpdated = await Story.update(updateBody, { returning: true, where: { id: storyId } });
-    if (!storyUpdated[0])
-        throw new AppError(`Story not found`, 404);
-    return storyUpdated[1][0];
-};
-
-exports.deleteStory = async (storyId) => {
-    const storyDeleted = await Story.destroy({ where: { id: storyId } });
-    if (!storyDeleted)
-        throw new AppError(`Story not found`, 404);
-    return;
-};

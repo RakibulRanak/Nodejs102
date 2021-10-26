@@ -1,13 +1,16 @@
 const catchAsync = require('../errors/catchAsync');
-const storyService = require('../services/storyService');
 const { sendJsonResponse, sendXmlResponse } = require("../utils/sendResponse");
-
+const { StoryService } = require('../services/storyService');
+const { PgStoryDao } = require('../data/dao/pgStoryDao');
+const { MgStoryDao } = require('../data/dao/mgStoryDao');
+const storyService = new StoryService(new PgStoryDao());
+//const storyService = new StoryService(new MgStoryDao());
 
 exports.createStory = catchAsync(async (req, res, next) => {
     const story = await storyService.createStory(req.body);
     res.format({
         'default': () => sendJsonResponse(req, res, 201, 'success', 'Story created successfully', story),
-        'application/xml': () => sendXmlResponse(req, res, 201, story)
+        'application/xml': () => sendXmlResponse(req, res, 201, story),
     });
 });
 
@@ -21,10 +24,11 @@ exports.getStory = catchAsync(async (req, res, next) => {
 });
 
 exports.getStories = catchAsync(async (req, res, next) => {
-    const stories = await storyService.getStories();
+    const stories = await storyService.getStories(req);
     res.format({
         'default': () => sendJsonResponse(req, res, 200, 'success', 'Stories fetched successfully', stories),
         'application/xml': () => sendXmlResponse(req, res, 200, stories),
+
     });
 });
 
