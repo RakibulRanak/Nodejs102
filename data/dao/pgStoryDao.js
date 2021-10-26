@@ -5,7 +5,7 @@ const { StoryDto } = require('../dto/storyDto')
 
 
 class PgStoryDao extends StoryDao {
-    constructor() { super() }
+    constructor() { super(); console.log("pg") }
     createStory = async (storyBody) => {
         const story = await Story.create(storyBody);
         return new StoryDto(story);
@@ -16,9 +16,17 @@ class PgStoryDao extends StoryDao {
         return new StoryDto(story);
     };
 
-    getStories = async () => {
-        const stories = await Story.findAll();
+    getStories = async (req) => {
+        let { page, size } = req.query;
+        if (!page)
+            page = 1;
+        if (!size)
+            size = 10;
+        const limit = parseInt(size);
+        const skip = limit * (parseInt(page) - 1);
+        const stories = await Story.findAll({ limit, offset: skip, order: [['createdAt', 'DESC']] });
         if (stories[0] == null) throw new AppError(`No story found`, 404);
+
         let storyArray = [];
         for (let i = 0; i < stories.length; i++) {
             storyArray[i] = new StoryDto(stories[i]);

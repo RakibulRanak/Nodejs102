@@ -1,6 +1,6 @@
 const { StoryDao } = require('./storyDao');
 
-class MggStoryDao extends StoryDao {
+class MgStoryDao extends StoryDao {
     constructor() { super() }
 }
 module.exports = { MgStoryDao };

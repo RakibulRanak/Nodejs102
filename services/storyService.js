@@ -11,8 +11,8 @@ class StoryService {
         return story;
     };
 
-    getStories = async () => {
-        const stories = await this.storyDao.getStories();
+    getStories = async (req) => {
+        const stories = await this.storyDao.getStories(req);
         return stories;
     };
     updateStory = async (storyId, updateBody) => {

@@ -3,7 +3,8 @@ class StoryDto {
         this.id = story.id;
         this.title = story.title;
         this.story = story.story;
-        this.author = story.author;
+        this.author = story.username;
+
     }
 }
 

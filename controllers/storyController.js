@@ -1,7 +1,9 @@
 const catchAsync = require('../errors/catchAsync');
 const { StoryService } = require('../services/storyService');
 const { PgStoryDao } = require('../data/dao/pgStoryDao');
+const { MgStoryDao } = require('../data/dao/mgStoryDao');
 const storyService = new StoryService(new PgStoryDao());
+//const storyService = new StoryService(new MgStoryDao());
 
 exports.createStory = catchAsync(async (req, res, next) => {
 
@@ -23,7 +25,7 @@ exports.getStory = catchAsync(async (req, res, next) => {
 });
 
 exports.getStories = catchAsync(async (req, res, next) => {
-    const stories = await storyService.getStories();
+    const stories = await storyService.getStories(req);
     res.status(200).json({
         status: 'success',
         message: 'Stories fetched successfully',
