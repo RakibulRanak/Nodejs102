@@ -19,7 +19,7 @@ const Story = sequelize.define('story', {
             notEmpty: true
         }
     },
-    story : {
+    story: {
         type: DataTypes.TEXT,
         allowNull: false,
         validate: {

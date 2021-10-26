@@ -5,7 +5,10 @@ const sequelize = new Sequelize(
   {
     logging: console.log,
     define: {
-      timestamps: true
+      timestamps: true,
+    },
+    query: {
+      raw: true
     },
     dialect: 'postgres',
     timezone: 'utc'
