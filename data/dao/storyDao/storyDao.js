@@ -1,6 +1,3 @@
-const Story = require('../../models/storyModel');
-const AppError = require('../../errors/appError');
-
 
 class StoryDao {
     constructor() {

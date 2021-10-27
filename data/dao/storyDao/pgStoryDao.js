@@ -1,7 +1,7 @@
-const Story = require('../../models/storyModel');
-const AppError = require('../../errors/appError');
+const Story = require('../../../models/storyModel');
+const AppError = require('../../../errors/appError');
 const { StoryDao } = require('./storyDao');
-const { StoryDto } = require('../dto/storyDto')
+const { StoryDto } = require('../../dto/storyDto')
 
 
 class PgStoryDao extends StoryDao {
