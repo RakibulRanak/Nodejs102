@@ -1,3 +1,6 @@
+const { createSetJwtToken } = require('../utils/createSetJwtToken')
+
+
 class UserService {
     constructor(userDao) {
         this.userDao = userDao;
@@ -11,19 +14,31 @@ class UserService {
         return user;
     };
 
-    getStories = async (req) => {
-        const users = await this.userDao.getStories(req);
+    getUsers = async (req) => {
+        const users = await this.userDao.getUsers(req);
         return users;
     };
-    updateUser = async (userName, updateBody) => {
-        const userUpdated = await this.userDao.updateUser(userName, updateBody);
+    updateUser = async (req) => {
+        const userUpdated = await this.userDao.updateUser(req);
         return userUpdated;
     };
 
-    deleteUser = async (userId) => {
-        const userDeleted = await this.userDao.deleteUser(userName);
+    deleteUser = async (req) => {
+        await this.userDao.deleteUser(req);
         return;
     };
+
+    loginUser = async (req, res) => {
+        const user = await this.userDao.loginUser(req.body);
+        createSetJwtToken(res, user);
+        return user;
+    };
+
+    changeUserPassword = async (req, res) => {
+        const user = await this.userDao.changeUserPassword(req);
+        createSetJwtToken(res, user);
+        return user;
+    }
 }
 
 module.exports = { UserService };

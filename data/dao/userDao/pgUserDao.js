@@ -2,21 +2,40 @@ const User = require('../../../models/userModel');
 const AppError = require('../../../errors/appError');
 const { UserDao } = require('./userDao');
 const { UserDto } = require('../../dto/userDto')
-
+const Sequelize = require('sequelize');
+const bcrypt = require('bcryptjs');
 
 class PgUserDao extends UserDao {
     constructor() { super(); }
     createUser = async (userBody) => {
-        const user = await User.create(userBody);
+        const Op = Sequelize.Op;
+        const { email, username, name, password } = userBody;
+        let user = await User.findOne({
+            where:
+            {
+                [Op.or]: [
+                    { username },
+                    { email }
+                ]
+            }
+        });
+        if (user)
+            throw new AppError('Username or Email Already Exist!', 405);
+
+        const salt = await bcrypt.genSalt(10);
+
+        const hashedpassword = await bcrypt.hash(password, salt);
+        user = await User.create({ username, name, email, password: hashedpassword });
         return new UserDto(user);
     };
+
     getUser = async (userName) => {
         const user = await User.findOne({ where: { username: userName } });
         if (!user) throw new AppError(`User not found`, 404);
         return new UserDto(user);
     };
 
-    getStories = async (req) => {
+    getUsers = async (req) => {
         let { page, size } = req.query;
         if (!page)
             page = 1;
@@ -32,19 +51,61 @@ class PgUserDao extends UserDao {
         }
         return userArray;
     };
-    updateUser = async (userName, updateBody) => {
-        const userUpdated = await User.update(updateBody, { returning: true, where: { username: userName } });
+    updateUser = async (req) => {
+        const { name, email } = req.body;
+        const username = req.user.username;
+        const userUpdated = await User.update({ name, email }, { returning: true, where: { username } });
         if (!userUpdated[0])
-            throw new AppError(`User not found`, 404);
+            throw new AppError(`User did not update`, 404);
         return new UserDto(userUpdated[1][0]);
     };
 
-    deleteUser = async (userName) => {
-        const userDeleted = await User.destroy({ where: { userName: userName } });
-        if (!userDeleted)
-            throw new AppError(`User not found`, 404);
+    deleteUser = async (req) => {
+        const { password } = req.body;
+        const username = req.user.username;
+        const user = await User.findOne({
+            where: {
+                username
+            }
+        });
+        const validPass = await bcrypt.compare(password, user.password);
+        if (!validPass)
+            throw new AppError('Invalid Credential', 404);
+        await User.destroy({ where: { username } });
         return;
     };
+
+    loginUser = async (userBody) => {
+        const { username, password } = userBody;
+        const user = await User.findOne({
+            where: {
+                username
+            }
+        });
+        if (user == null)
+            throw new AppError('Invalid Credential', 404);
+        const validPass = await bcrypt.compare(password, user.password);
+        if (!validPass)
+            throw new AppError('Invalid Credential', 404);
+        return new UserDto(user);
+    }
+
+    changeUserPassword = async (req) => {
+        const username = req.user.username;
+        const { newPassword, oldPassword } = req.body;
+        const user = await User.findOne({
+            where: {
+                username
+            }
+        });
+        const validPass = await bcrypt.compare(oldPassword, user.password);
+        if (!validPass)
+            throw new AppError('Invalid Credential', 404);
+        const salt = await bcrypt.genSalt(10);
+        const password = await bcrypt.hash(newPassword, salt);
+        const updatedUser = await User.update({ password }, { returning: true, where: { username } });
+        return new UserDto(updatedUser[1][0]);
+    }
 
 
 }

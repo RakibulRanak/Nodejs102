@@ -6,6 +6,7 @@ const { MgUserDao } = require('../data/dao/userDao/mgUserDao');
 const userService = new UserService(new PgUserDao());
 //const userService = new userService(new MgUserDao());
 
+
 exports.createUser = catchAsync(async (req, res, next) => {
     const user = await userService.createUser(req.body);
     res.format({
@@ -24,7 +25,7 @@ exports.getUser = catchAsync(async (req, res, next) => {
 });
 
 exports.getUsers = catchAsync(async (req, res, next) => {
-    const users = await userService.getStories(req);
+    const users = await userService.getUsers(req);
     res.format({
         'default': () => sendJsonResponse(req, res, 200, 'success', 'Stories fetched successfully', usesr),
         'application/xml': () => sendXmlResponse(req, res, 200, users),
@@ -33,7 +34,7 @@ exports.getUsers = catchAsync(async (req, res, next) => {
 });
 
 exports.updateUser = catchAsync(async (req, res, next) => {
-    const userUpdated = await userService.updateUser(req.params.username, req.body);
+    const userUpdated = await userService.updateUser(req);
     res.format({
         'default': () => sendJsonResponse(req, res, 200, 'success', 'User updated successfully', userUpdated),
         'application/xml': () => sendXmlResponse(req, res, 200, userUpdated),
@@ -41,9 +42,33 @@ exports.updateUser = catchAsync(async (req, res, next) => {
 });
 
 exports.deleteUser = catchAsync(async (req, res, next) => {
-    await userService.deleteUser(req.params.username);
+    await userService.deleteUser(req);
     res.status(204).send();
 });
 
+exports.loginUser = catchAsync(async (req, res, next) => {
+    const user = await userService.loginUser(req, res);
+    res.format({
+        'default': () => sendJsonResponse(req, res, 200, 'success', 'User looged In successfully', user),
+        'application/xml': () => sendXmlResponse(req, res, 200, user),
+    });
 
+});
+exports.logoutUser = catchAsync(async (req, res, next) => {
+    res.cookie('jwt', '', {
+        expires: new Date(Date.now() + 10 * 1000),
+        httpOnly: true
+    });
+    res.format({
+        'default': () => sendJsonResponse(req, res, 200, 'success', 'User looged Out successfully', null),
+        'application/xml': () => sendXmlResponse(req, res, 200, null),
+    });
+});
+exports.changeUserPassword = catchAsync(async (req, res, next) => {
+    const user = await userService.changeUserPassword(req, res);
+    res.format({
+        'default': () => sendJsonResponse(req, res, 200, 'success', 'Password changed successfully', user),
+        'application/xml': () => sendXmlResponse(req, res, 200, user),
+    });
 
+});

@@ -4,7 +4,6 @@ const AppError = require('./appError');
 
 
 const sendError = (err, res) => {
-  console.log(err)
   if (err.isOperational) {
     res
       .status(err.statusCode)
@@ -17,7 +16,7 @@ const sendError = (err, res) => {
 
 
 const errorHandler = (err, req, res, next) => {
-  //console.log(err.name);
+  // console.log(err.stack)
   err.status = err.status || 'error';
   err.statusCode = err.statusCode || 500;
 

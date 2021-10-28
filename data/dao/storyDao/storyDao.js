@@ -7,8 +7,8 @@ class StoryDao {
     createStory = async (storyBody) => { };
     getStory = async (storyId) => { };
     getStories = async () => { };
-    updateStory = async (storyId, updateBody) => { };
-    deleteStory = async (storyId) => { };
+    updateStory = async (req) => { };
+    deleteStory = async (req) => { };
 
 }
 module.exports = { StoryDao };

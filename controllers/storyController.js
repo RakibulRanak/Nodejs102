@@ -7,7 +7,7 @@ const storyService = new StoryService(new PgStoryDao());
 //const storyService = new StoryService(new MgStoryDao());
 
 exports.createStory = catchAsync(async (req, res, next) => {
-    const story = await storyService.createStory(req.body);
+    const story = await storyService.createStory(req);
     res.format({
         'default': () => sendJsonResponse(req, res, 201, 'success', 'Story created successfully', story),
         'application/xml': () => sendXmlResponse(req, res, 201, story),
@@ -33,7 +33,7 @@ exports.getStories = catchAsync(async (req, res, next) => {
 });
 
 exports.updateStory = catchAsync(async (req, res, next) => {
-    const storyUpdated = await storyService.updateStory(req.params.id, req.body);
+    const storyUpdated = await storyService.updateStory(req);
     res.format({
         'default': () => sendJsonResponse(req, res, 200, 'success', 'Story updated successfully', storyUpdated),
         'application/xml': () => sendXmlResponse(req, res, 200, storyUpdated),
@@ -41,7 +41,7 @@ exports.updateStory = catchAsync(async (req, res, next) => {
 });
 
 exports.deleteStory = catchAsync(async (req, res, next) => {
-    await storyService.deleteStory(req.params.id);
+    await storyService.deleteStory(req);
     res.status(204).send();
 });
 

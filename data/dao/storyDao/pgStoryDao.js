@@ -5,10 +5,11 @@ const { StoryDto } = require('../../dto/storyDto')
 
 
 class PgStoryDao extends StoryDao {
-    constructor() { super(); console.log("pg") }
+    constructor() { super(); }
     createStory = async (storyBody) => {
-        const story = await Story.create(storyBody);
-        return new StoryDto(story);
+        const { title, username, story } = storyBody;
+        const createdstory = await Story.create({ title, username, story });
+        return new StoryDto(createdstory);
     };
     getStory = async (storyId) => {
         const story = await Story.findOne({ where: { id: storyId } });
@@ -32,17 +33,24 @@ class PgStoryDao extends StoryDao {
         }
         return storyArray;
     };
-    updateStory = async (storyId, updateBody) => {
-        const storyUpdated = await Story.update(updateBody, { returning: true, where: { id: storyId } });
-        if (!storyUpdated[0])
-            throw new AppError(`Story not found`, 404);
+    updateStory = async (req) => {
+        let hasStory = await Story.findOne({ where: { id: req.params.id } });
+        if (hasStory == null)
+            throw new AppError(`Story Does Not found`, 404);
+        if (req.user.username != hasStory.username)
+            throw new AppError(`You are Not allowed to perform this action`, 403);
+        const { title, story } = req.body;
+        const storyUpdated = await Story.update(title, story, { returning: true, where: { id: req.params.id } });
         return new StoryDto(storyUpdated[1][0]);
     };
 
-    deleteStory = async (storyId) => {
+    deleteStory = async (req) => {
+        let hasStory = await Story.findOne({ where: { id: req.params.id } });
+        if (hasStory == null)
+            throw new AppError(`Story Does Not found`, 404);
+        if (req.user.username != hasStory.username)
+            throw new AppError(`You are Not allowed to perform this action`, 403);
         const storyDeleted = await Story.destroy({ where: { id: storyId } });
-        if (!storyDeleted)
-            throw new AppError(`Story not found`, 404);
         return;
     };
 
