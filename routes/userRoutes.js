@@ -12,7 +12,7 @@ router.put('/changepassword', authMiddleware.protect, userValidation.changeUserP
 router.put('/', authMiddleware.protect, userValidation.updateUser(), validate, userController.updateUser);
 router.delete('/', authMiddleware.protect, userValidation.deleteUser(), validate, userController.deleteUser);
 router.get('/', userController.getUsers);
-router.post('/', userValidation.createUser(), validate, userController.createUser);
+router.post('/', authMiddleware.isLoggedIn, userValidation.createUser(), validate, userController.createUser);
 
 
 
