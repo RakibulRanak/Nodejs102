@@ -27,7 +27,7 @@ exports.getUser = catchAsync(async (req, res, next) => {
 exports.getUsers = catchAsync(async (req, res, next) => {
     const users = await userService.getUsers(req);
     res.format({
-        'default': () => sendJsonResponse(req, res, 200, 'success', 'Stories fetched successfully', usesr),
+        'default': () => sendJsonResponse(req, res, 200, 'success', 'Stories fetched successfully', users),
         'application/xml': () => sendXmlResponse(req, res, 200, users),
 
     });

@@ -40,7 +40,7 @@ class PgStoryDao extends StoryDao {
         if (req.user.username != hasStory.username)
             throw new AppError(`You are Not allowed to perform this action`, 403);
         const { title, story } = req.body;
-        const storyUpdated = await Story.update(title, story, { returning: true, where: { id: req.params.id } });
+        const storyUpdated = await Story.update({ title, story }, { returning: true, where: { id: req.params.id } });
         return new StoryDto(storyUpdated[1][0]);
     };
 
@@ -50,7 +50,7 @@ class PgStoryDao extends StoryDao {
             throw new AppError(`Story Does Not found`, 404);
         if (req.user.username != hasStory.username)
             throw new AppError(`You are Not allowed to perform this action`, 403);
-        const storyDeleted = await Story.destroy({ where: { id: storyId } });
+        const storyDeleted = await Story.destroy({ where: { id: req.params.id } });
         return;
     };
 

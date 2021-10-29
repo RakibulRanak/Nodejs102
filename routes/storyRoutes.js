@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const storyController = require('../controllers/storyController');
 const storyValidation = require('../validations/storyValidation')
-const { validate } = require('../utils/validate');
+const { validate } = require('../validations/validate');
 const authController = require('../controllers/authController')
 
 router.post('/', authController.protect, storyValidation.createStory(), validate, storyController.createStory);
