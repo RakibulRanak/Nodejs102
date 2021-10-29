@@ -3,14 +3,14 @@ const router = express.Router();
 const userController = require('../controllers/userController');
 const userValidation = require('../validations/userValidation')
 const { validate } = require('../validations/validate');
-const authController = require('../controllers/authController')
+const authMiddleware = require('../middlewares/authMiddleware')
 
-router.post('/login', userController.loginUser);
-router.post('/logout', authController.protect, userController.logoutUser);
+router.post('/login', authMiddleware.isLoggedIn, userController.loginUser);
+router.post('/logout', authMiddleware.protect, userController.logoutUser);
 router.get('/:username', userValidation.getUser(), validate, userController.getUser);
-router.put('/changepassword', authController.protect, userValidation.changeUserPassword(), validate, userController.changeUserPassword);
-router.put('/', authController.protect, userValidation.updateUser(), validate, userController.updateUser);
-router.delete('/', authController.protect, userValidation.deleteUser(), validate, userController.deleteUser);
+router.put('/changepassword', authMiddleware.protect, userValidation.changeUserPassword(), validate, userController.changeUserPassword);
+router.put('/', authMiddleware.protect, userValidation.updateUser(), validate, userController.updateUser);
+router.delete('/', authMiddleware.protect, userValidation.deleteUser(), validate, userController.deleteUser);
 router.get('/', userController.getUsers);
 router.post('/', userValidation.createUser(), validate, userController.createUser);
 

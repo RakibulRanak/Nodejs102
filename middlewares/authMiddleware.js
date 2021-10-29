@@ -33,3 +33,14 @@ exports.protect = catchAsync(async (req, res, next) => {
     };
     next();
 });
+
+exports.isLoggedIn = catchAsync(async (req, res, next) => {
+    let token = "";
+    token = req.cookies.jwt;
+    if (!token)
+        return next();
+    const decoded = await promisify(jwt.verify)(token, process.env.jwtSecret);
+    if (decoded)
+        throw new AppError('Log Out to log in again', '401');
+    next();
+});
