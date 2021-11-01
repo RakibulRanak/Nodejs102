@@ -1,9 +1,10 @@
-const sequelize = require('../db');
+const sequelize = require('../db/pgClient');
 const { DataTypes } = require('sequelize');
 
-const Story = sequelize.define('story', {
+const Story = sequelize.define('stories', {
     username: {
         type: DataTypes.STRING,
+        foreignKey: true,
         noUpdate: true,
         allowNull: false,
         validate: {
