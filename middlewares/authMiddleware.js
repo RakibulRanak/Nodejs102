@@ -41,6 +41,6 @@ exports.isLoggedIn = catchAsync(async (req, res, next) => {
         return next();
     const decoded = await promisify(jwt.verify)(token, process.env.jwtSecret);
     if (decoded)
-        throw new AppError('Please Log out first', '401');
+        throw new AppError('Please Log out first', '403');
     next();
 });

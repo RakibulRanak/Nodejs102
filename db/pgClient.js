@@ -1,6 +1,8 @@
 const Sequelize = require('sequelize');
+require('dotenv').config();
+const DB_URI = (process.env.NODE_ENV == 'test') ? process.env.DB_URI_TEST : process.env.DB_URI;
 const sequelize = new Sequelize(
-  process.env.DB_URI,
+  DB_URI,
   {
     logging: console.log,
     define: {
