@@ -1,0 +1,29 @@
+
+// const request = require('supertest');
+// const app = require('../../app');
+// jest.mock("../../controllers/userController");
+
+
+// // test('Should create an user and response 201', async () => {
+// //     const response = await request(app)
+// //         .post('/api/v1/users')
+// //         .set('accept', 'application/json')
+// //         .expect(201);
+// //     // expect(response.body.message).toBe("User fetcheddd successfully");
+// //     expect(response.header['content-type']).toBe("application/json; charset=utf-8");
+
+
+// //     console.log(response.header['content-type'])
+// // })
+
+// test('Should get an user and response 200', async () => {
+//     const response = await request(app)
+//         .get('/api/v1/users/testing')
+//         .set('accept', 'application/xml')
+//         .expect(200);
+//     // expect(response.body.message).toBe("User fetcheddd successfully");
+//     expect(response.header['content-type']).toBe("application/xml; charset=utf-8");
+
+
+//     console.log(response.header['content-type'])
+// })

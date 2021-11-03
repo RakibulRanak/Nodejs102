@@ -1,4 +1,4 @@
-const sequelize = require('../db/pgClient');
+const sequelize = require('../db/pgConfig');
 const Story = require('../models/storyModel');
 const User = require('../models/userModel');
 

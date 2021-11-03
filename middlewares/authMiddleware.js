@@ -3,7 +3,7 @@ const AppError = require('../errors/appError');
 const { promisify } = require('util');
 const jwt = require('jsonwebtoken');
 const { PgUserDao } = require('../data/dao/userDao/pgUserDao');
-const { MgUserDao } = require('../data/dao/userDao/mgUserDao')
+// const { MgUserDao } = require('../data/dao/userDao/mgUserDao')
 const { UserService } = require('../services/userService');
 const userService = new UserService(new PgUserDao());
 

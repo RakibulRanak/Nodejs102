@@ -2,9 +2,8 @@ const catchAsync = require('../errors/catchAsync');
 const { sendJsonResponse, sendXmlResponse } = require("../utils/sendResponse");
 const { UserService } = require('../services/userService');
 const { PgUserDao } = require('../data/dao/userDao/pgUserDao');
-const { MgUserDao } = require('../data/dao/userDao/mgUserDao');
 const userService = new UserService(new PgUserDao());
-//const userService = new userService(new MgUserDao());
+
 
 
 exports.createUser = catchAsync(async (req, res, next) => {

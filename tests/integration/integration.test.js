@@ -1,7 +1,7 @@
 
 const request = require('supertest');
-const app = require('../app');
-const table = require('../utils/dbActions');
+const app = require('../../app');
+const table = require('../../utils/dbActions');
 jest.setTimeout(6000)
 beforeAll(() => {
     table.clearDB();
