@@ -94,7 +94,6 @@ test('Should return a story and 200', async () => {
         .set('accept', 'application/json')
         .expect(200);
     expect(response.body.data.length).toBe(2)
-    //console.log(">>>>>", response.body)
 })
 
 /// create another user and try to perform not allowed method
