@@ -81,13 +81,20 @@ test('Should create story and response 201', async () => {
         .send(testStory)
         .expect(201);
 })
-
+test('Should create another story and response 201', async () => {
+    const response = await request(app)
+        .post('/api/v1/stories')
+        .set('cookie', jwt)
+        .send(testStory)
+        .expect(201);
+})
 test('Should return a story and 200', async () => {
     const response = await request(app)
         .get('/api/v1/stories?page=1&size=4')
         .set('accept', 'application/json')
         .expect(200);
-    expect(response.body.data.length).toBe(1)
+    expect(response.body.data.length).toBe(2)
+    //console.log(">>>>>", response.body)
 })
 
 /// create another user and try to perform not allowed method

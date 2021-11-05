@@ -1,5 +1,5 @@
-const { UserService } = require("./../../../services/userService")
-const { PgUserDao } = require('./../../../data/dao/userDao/pgUserDao');
+const { UserService } = require("../../../services/userService")
+const { PgUserDao } = require('../../../data/dao/userDao/pgUserDao');
 const userDao = new PgUserDao();
 const userService = new UserService(userDao);
 

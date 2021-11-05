@@ -1,5 +1,5 @@
 const catchAsync = require('../errors/catchAsync');
-const { sendJsonResponse, sendXmlResponse } = require("../utils/sendResponse");
+const { sendResponse } = require("../utils/sendResponse");
 const { StoryService } = require('../services/storyService');
 const { PgStoryDao } = require('../data/dao/storyDao/pgStoryDao');
 const storyService = new StoryService(new PgStoryDao());
@@ -7,36 +7,26 @@ const storyService = new StoryService(new PgStoryDao());
 
 exports.createStory = catchAsync(async (req, res, next) => {
     const story = await storyService.createStory(req);
-    res.format({
-        'default': () => sendJsonResponse(req, res, 201, 'success', 'Story created successfully', story),
-        'application/xml': () => sendXmlResponse(req, res, 201, story),
-    });
+    sendResponse(req, res, 201, story, 'Story created successfully')
+
 });
 
 exports.getStory = catchAsync(async (req, res, next) => {
     const story = await storyService.getStory(req.params.id);
-    res.format({
-        'default': () => sendJsonResponse(req, res, 200, 'success', 'Story fetched successfully', story),
-        'application/xml': () => sendXmlResponse(req, res, 200, story),
-    });
+    sendResponse(req, res, 200, story, 'Story fetched successfully')
 
 });
 
 exports.getStories = catchAsync(async (req, res, next) => {
     const stories = await storyService.getStories(req);
-    res.format({
-        'default': () => sendJsonResponse(req, res, 200, 'success', 'Stories fetched successfully', stories),
-        'application/xml': () => sendXmlResponse(req, res, 200, stories),
-
-    });
+    sendResponse(req, res, 200, stories, 'Stories fetched successfully')
 });
 
 exports.updateStory = catchAsync(async (req, res, next) => {
     const storyUpdated = await storyService.updateStory(req);
-    res.format({
-        'default': () => sendJsonResponse(req, res, 200, 'success', 'Story updated successfully', storyUpdated),
-        'application/xml': () => sendXmlResponse(req, res, 200, storyUpdated),
-    });
+    sendResponse(req, res, 200, storyUpdated, 'Story updated successfully')
+
+
 });
 
 exports.deleteStory = catchAsync(async (req, res, next) => {
