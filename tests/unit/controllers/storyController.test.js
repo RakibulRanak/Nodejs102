@@ -46,6 +46,23 @@ describe('Get story', () => {
         expect(content_type).toBe("application/json")
         expect(data.data).toEqual(storyResponse[0]);
     })
+    test('Get story by id request but throws error ', async () => {
+        jest.spyOn(storyService, 'getStory').mockImplementation(() => {
+            throw new Error('Story not found');
+        });
+        const res = mocks.createResponse();
+        const req = mocks.createRequest({
+            headers: {
+                accept: 'application/json'
+            },
+            params: {
+                id: 0
+            }
+        });
+        const mNext = jest.fn();
+        await storyController.getStory(req, res, mNext);
+        expect(mNext).toHaveBeenCalledTimes(1);
+    })
 
     test('Get a story by id in xml format ', async () => {
         jest.spyOn(storyService, 'getStory').mockResolvedValue(storyResponse[0]);
