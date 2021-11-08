@@ -1,5 +1,5 @@
 
-const sequelize = require('../db/pgClient');
+const sequelize = require('../db/pgConfig');
 const { DataTypes } = require('sequelize');
 
 const User = sequelize.define('users', {

@@ -16,7 +16,7 @@ const sendError = (err, res) => {
 
 
 const errorHandler = (err, req, res, next) => {
-  //console.log(err.stack)
+  // console.log(err.stack)
   err.status = err.status || 'error';
   err.statusCode = err.statusCode || 500;
 

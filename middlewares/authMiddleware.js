@@ -3,7 +3,7 @@ const AppError = require('../errors/appError');
 const { promisify } = require('util');
 const jwt = require('jsonwebtoken');
 const { PgUserDao } = require('../data/dao/userDao/pgUserDao');
-const { MgUserDao } = require('../data/dao/userDao/mgUserDao')
+// const { MgUserDao } = require('../data/dao/userDao/mgUserDao')
 const { UserService } = require('../services/userService');
 const userService = new UserService(new PgUserDao());
 
@@ -41,6 +41,6 @@ exports.isLoggedIn = catchAsync(async (req, res, next) => {
         return next();
     const decoded = await promisify(jwt.verify)(token, process.env.jwtSecret);
     if (decoded)
-        throw new AppError('Please Log out first', '401');
+        throw new AppError('Please Log out first', '403');
     next();
 });
