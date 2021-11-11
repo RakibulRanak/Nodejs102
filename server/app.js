@@ -1,6 +1,7 @@
 'use strict';
 // Imports
 const express = require('express');
+const cors = require('cors')
 
 const cookieParser = require('cookie-parser');
 
@@ -15,6 +16,7 @@ const association = require('./associations/association');
 
 // Creating the express app
 const app = express();
+app.use(cors())
 app.use(cookieParser())
 // Parsing JSON and Cookies
 
