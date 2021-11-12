@@ -12,13 +12,14 @@ const userRoutes = require('./routes/userRoutes')
 const globalErrorHandler = require('./errors/errorHandler');
 const AppError = require('./errors/appError');
 const association = require('./associations/association');
-
+const cors = require('cors')
 // Creating the express app
 const app = express();
 app.use(cookieParser())
 // Parsing JSON and Cookies
 
 app.use(express.json({ limit: '1000kb' }));
+app.use(cors())
 
 
 app.use(morgan('dev'));
