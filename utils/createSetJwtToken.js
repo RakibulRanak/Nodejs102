@@ -11,6 +11,7 @@ exports.createSetJwtToken = (res, user) => {
             Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 60 * 60 * 1000
         ),
         httpOnly: true
+
     });
     if (process.env.NODE_ENV === 'prooooductin')
         cookieOptions.secure = true;

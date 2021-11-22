@@ -25,7 +25,8 @@ class PgStoryDao extends StoryDao {
             size = 10;
         const limit = parseInt(size);
         const skip = limit * (parseInt(page) - 1);
-        const stories = await Story.findAll({ limit, offset: skip, order: [['createdAt', 'DESC']] });
+        //const stories = await Story.findAll({ limit, offset: skip, order: [['createdAt', 'DESC']] });
+        const stories = await Story.findAll({ order: [['createdAt', 'DESC']] });
         if (stories[0] == null) throw new AppError(`No story found`, 404);
         let storyArray = [];
         for (let i = 0; i < stories.length; i++) {

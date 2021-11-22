@@ -1,12 +1,15 @@
 'use strict';
 // Imports
 const express = require('express');
-
+require('dotenv').config();
 const cookieParser = require('cookie-parser');
+const xssClean = require('xss-clean');
+const helmet = require('helmet');
 
 const morgan = require('morgan');
 const storyRoutes = require('./routes/storyRoutes')
 const userRoutes = require('./routes/userRoutes')
+
 
 
 const globalErrorHandler = require('./errors/errorHandler');
@@ -15,15 +18,18 @@ const association = require('./associations/association');
 const cors = require('cors')
 // Creating the express app
 const app = express();
-app.use(cookieParser())
+
 // Parsing JSON and Cookies
+app.use(helmet())
+app.use(cookieParser())
+app.use(cors());
 
 app.use(express.json({ limit: '1000kb' }));
-app.use(cors())
-
 
 app.use(morgan('dev'));
+app.use(xssClean());
 
+app.use(express.static(__dirname + '/public/media/'));
 app.use('/api/v1/stories', storyRoutes);
 app.use('/api/v1/users', userRoutes);
 

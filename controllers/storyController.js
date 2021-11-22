@@ -24,6 +24,7 @@ exports.getStories = async (req, res, next) => {
     try {
         const stories = await storyService.getStories(req);
         sendResponse(req, res, 200, stories, 'Stories fetched successfully')
+
     } catch (err) { next(err) };
 };
 
