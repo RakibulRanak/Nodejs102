@@ -10,17 +10,13 @@ class PgUserDao extends UserDao {
     createUser = async (userBody) => {
         const Op = Sequelize.Op;
         const { email, username, name, password } = userBody;
-        let user = await User.findOne({
-            where:
-            {
-                [Op.or]: [
-                    { username },
-                    { email }
-                ]
-            }
-        });
+        let user = await User.findOne({ where: { username } });
         if (user)
-            throw new AppError('Username or Email Already Exist!', 405);
+            throw new AppError('Username Already Exist!', 405);
+
+        user = await User.findOne({ where: { email } });
+        if (user)
+            throw new AppError('Email Already Exist!', 405);
 
         const salt = await bcrypt.genSalt(10);
 

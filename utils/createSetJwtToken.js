@@ -5,10 +5,11 @@ exports.createSetJwtToken = (res, user) => {
     const payload = {
         user: user.username
     };
+    // var oneWeek = 7 * 24 * 3600 * 1000; //1 weeks       
     const jwtToken = jwt.sign(payload, process.env.jwtSecret, { expiresIn: process.env.jwtSessionTokenExpire });
     res.cookie('jwt', jwtToken, {
         expires: new Date(
-            Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 60 * 60 * 1000
+            Date.now() + 3600 * 1000
         ),
         httpOnly: true
 
