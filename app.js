@@ -5,6 +5,7 @@ require('dotenv').config();
 const cookieParser = require('cookie-parser');
 const xssClean = require('xss-clean');
 const helmet = require('helmet');
+const path = require('path');
 
 const morgan = require('morgan');
 const storyRoutes = require('./routes/storyRoutes')
@@ -37,10 +38,15 @@ app.use('/api/v1/users', userRoutes);
 app.get('/api/v1', (req, res) => {
   res.send('Welcome to home page!');
 });
-
-app.all('*', (req, res, next) => {
-  return next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
-});
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('build'));
+  app.all('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
+  })
+}
+// app.all('*', (req, res, next) => {
+//   return next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+// });
 
 app.use(globalErrorHandler)
 
