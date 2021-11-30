@@ -116,4 +116,4 @@ public
 .pnp.*
 
 # Media Files
-public/media
+#public/media
