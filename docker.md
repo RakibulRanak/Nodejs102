@@ -15,9 +15,9 @@
 ## browsing
 1. go to http://localhost:3000/
 
-## heroku
+## deploy docker image in heroku 
 1. heroku container:login
 2. heroku create mystoryhubapp  
 3. heroku container:push web --app mystoryhubapp 
 4. heroku container:release web --app mystoryhubapp 
-5  heroku logs --tail --app mystoryhubapp  
+5. heroku logs --tail --app mystoryhubapp  
