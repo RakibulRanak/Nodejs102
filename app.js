@@ -44,9 +44,11 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
   })
 }
-// app.all('*', (req, res, next) => {
-//   return next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
-// });
+else {
+  app.all('*', (req, res, next) => {
+    return next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+  });
+}
 
 app.use(globalErrorHandler)
 
