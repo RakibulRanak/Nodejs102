@@ -4,29 +4,116 @@
 - Without any authorization
 
     * Get All Stories  : `GET /api/v1/stories`
+        - Valid Response
+            ```json
+                Status: 200 OK
+            ```
+            ```json
+                {
+                    "status": "success",
+                    "message": "Stories fetched successfully",
+                    "data": [
+                        {
+                            "id": 195,
+                            "title": "Please don't post anything unacceptable!!",
+                            "story": "If you are visiting this site, and want to test functionalities, you are kindly requested to open an account with fair username and post decent contents.",
+                            "author": "RakibulRanak",
+                            "postedAt": "2021-11-30T09:20:23.785Z"
+                        },
+                        {
+                            "id": 194,
+                            "title": "সমুদ্র",
+                            "story": "সমুদ্র বিশাল।সমুদ্রপানে তাকালে নিজেকে খুবই ক্ষুদ্র মনে হয়।পৃথিবীর কোনো এক প্রান্তে,যেখানে আকাশ মিলেছে সমুদ্রের সাথে,যেখানে বাতাসের সাথে গা ভাসায় বিস্তৃত ঢেউরাজি",
+                            "author": "RakibulRanak",
+                            "postedAt": "2021-11-30T09:14:00.787Z"
+                        },
+                        {
+                            "id": 193,
+                            "title": "একাকী দ্বীপ",
+                            "story": "আমি যদি কোনো এক দ্বীপে একাকী থাকতে পারতাম! যে দ্বীপ হবে অরণ্য শোভিত ,স্বচ্ছ পানি প্রবেশ করবে যার হৃদয় চিরে । সেখানে আকাশ হবে বিশাল-বিস্তৃত,যে আকাশ থাকবে স্বচ্ছ সাদা মেঘে ঢাকা ।" ,
+                            "author": "RakibulRanak",
+                            "postedAt": "2021-11-30T09:11:29.272Z"
+                        }
+                    ]
+                }
+            ```
        
     * Get A Single Story : `GET /api/v1/stories/:storyId`
-
+         - Valid Response
+            ```json
+                Status: 200 OK
+            ```
+            ```json
+                {
+                    "status": "success",
+                    "message": "Story fetched successfully",
+                    "data": {
+                        "id": 59,
+                        "title": "Hello World",
+                        "story": "What do you think about your world?...",
+                        "author": "acquaman",
+                        "postedAt": "2021-11-19T06:01:20.380Z"
+                }
 
 ### 
-- Authorized And Performed By User Himself
+- Authorized And Performed By User Himself ( *jwt cookie must be included with request* )
 
    * Post A Story : `POST /api/v1/stories`
+        - Request Body
+    
+            ```json
+            {
+            "title" : "Brave Lion",
+            "story" : "Once upon a time a lion lived in a jungle. ....."
+            }
+            ```
 
-        ```json
-        Request Body
-        {
-           "title" : "Brave Lion",
-           "story" : "Once upon a time a lion lived in a jungle. ....."
-        }
-        ```
+        - Valid Response
+            ```json
+                Status: 201 Created
+            ```
+            ```json
+                {
+                    "status": "success",
+                    "message": "Story created successfully",
+                    "data": {
+                        "id": 196,
+                        "title": "A cat and a dog",
+                        "story": "Once upon a time....... they lived in peach",
+                        "author": "RakibulRanak",
+                        "postedAt": "2021-12-09T06:16:17.546Z"
+                    }
+                }
+            ```
+
     * Update A Story : `PUT /api/v1/stories/:storyId`
-
-        ```json
-        Request Body
-        {
-           "title" : "Brave Cow",
-           "story" : "Once upon a time a lion lived in a jungle. ....."
-        }
-        ```
+        - Request Body
+            ```json
+            {
+                "title" : "Brave Cow",
+                "story" : "Once upon a time a lion lived in a jungle. ....."
+            }
+           ```
+        - Valid Response
+            ```json
+                Status: 200 OK
+            ```
+            ```json
+                {
+                    "status": "success",
+                    "message": "Story updated successfully",
+                    "data": {
+                        "id": 196,
+                        "title": "A cat and a dog",
+                        "story": "Once upon a time....... they lived in peach",
+                        "author": "RakibulRanak",
+                        "postedAt": "2021-12-09T06:16:17.546Z"
+                    }
+                }
+            ```
     * Delete  A Story : `DELETE /api/v1/stories/:storyId`
+        - Valid Response
+            ```json
+                Status: 204 No Content
+            ```
+            
