@@ -5,9 +5,9 @@
 
     * Get All Stories  : `GET /api/v1/stories`
         - Valid Response
-            ```json
-                Status: 200 OK
-            ```
+
+            Status: 200 OK
+            
             ```json
                 {
                     "status": "success",
@@ -40,9 +40,9 @@
        
     * Get A Single Story : `GET /api/v1/stories/:storyId`
          - Valid Response
-            ```json
-                Status: 200 OK
-            ```
+            
+             Status: 200 OK
+            
             ```json
                 {
                     "status": "success",
@@ -69,9 +69,9 @@
             ```
 
         - Valid Response
-            ```json
-                Status: 201 Created
-            ```
+            
+            Status: 201 Created
+            
             ```json
                 {
                     "status": "success",
@@ -85,6 +85,11 @@
                     }
                 }
             ```
+        - Valid Request Field Requirements:
+            - title must be between 1 to 50 chars
+            - description must be between 1 to 10000 chars
+  
+    &nbsp;
 
     * Update A Story : `PUT /api/v1/stories/:storyId`
         - Request Body
@@ -95,9 +100,9 @@
             }
            ```
         - Valid Response
-            ```json
-                Status: 200 OK
-            ```
+            
+            Status: 200 OK
+            
             ```json
                 {
                     "status": "success",
@@ -111,9 +116,15 @@
                     }
                 }
             ```
+        - Valid Request Field Requirements:
+            - title must be between 1 to 50 chars
+            - description must be between 1 to 10000 chars
+    
+    &nbsp;
     * Delete  A Story : `DELETE /api/v1/stories/:storyId`
-        - Valid Response
-            ```json
-                Status: 204 No Content
-            ```
+       
+        - Valid Respons
+             
+            Status: 204 No Content
+            
             

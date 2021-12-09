@@ -13,9 +13,9 @@
 
 ## 4. Pulling docker image and running in any machine
     docker pull rakibulranak/storyhub:app
-    docker run -it -p 3000:8000 rakibulranak/storyhub/app
+    docker run -it -p 6000:8000 rakibulranak/storyhub/app
 ## 5. Browsing
-     go to http://localhost:3000/
+     go to http://localhost:6000/
 ** *to create a docker image with frontend static files, build folder  of the frontend repository has to be put in the root folder and process.env.NODE_ENV of the backend must has to be 'production'*
 
  

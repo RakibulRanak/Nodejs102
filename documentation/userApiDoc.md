@@ -14,10 +14,19 @@
                     "confirmPassword":"12345678"
                 }
             ```
+        - Valid Request Field Requirements:
+            - username can't be null
+            - name can't be null
+            - email can't be null
+            - password must be between 8 to 15 chars
+            - confirmPassword must match password
+        &nbsp;
+        &nbsp;
+
         - Valid Response
-            ```json 
-                Status: 201 Created  
-            ```
+            
+            Status: 201 Created  
+            
             ```json
                 {
                     "status": "success",
@@ -34,16 +43,19 @@
    * Login User : `POST /api/v1/users/login`
         -  Request Body
             ```json
-            Request Body
             {
                 "email":"acquatarek@gmail.com",
                 "password":"12345678"
             }
             ```
+        - Valid Request Field Requirements:
+            - username can't be null
+            - password must be between 8 to 15 chars        
+        &nbsp;
         - Valid Response ( returns with a jwt cookie )
-            ```json 
-                Status: 200 OK  
-            ```
+        
+            Status: 200 OK  
+            
             ```json
                 {
                     "status": "success",
@@ -63,9 +75,9 @@
    * Log Out User : `GET /api/v1/users/logout`
 
      - Valid Response
-        ```json 
-            Status: 200 OK  
-        ```
+        
+        Status: 200 OK  
+        
         ```json
             {
                 "status": "success",
