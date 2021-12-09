@@ -4,10 +4,13 @@
 - **Without any authorization**
 
     * Get All Stories  : `GET /api/v1/stories`
+        -  Request Header
+            
+               Accept : application/json or application/xml
         - Valid Response
 
-            Status: 200 OK
-            
+              Status: 200 OK
+            JSON Response
             ```json
                 {
                     "status": "success",
@@ -37,12 +40,35 @@
                     ]
                 }
             ```
+            XML Response
+            ```xml
+            <?xml version='1.0'?>
+            <data>
+                <data>
+                    <id>9</id>
+                    <title>Hello World</title>
+                    <story>Once upon a time.......</story>
+                    <author>acquaman</author>
+                    <postedAt>Mon Nov 15 2021 13:41:51 GMT+0600 (Bangladesh Standard Time)</postedAt>
+                </data>
+                <data>
+                    <id>8</id>
+                    <title>Why do we live?</title>
+                    <story>Once upon a time.......</story>
+                    <author>RakibulRanak</author>
+                    <postedAt>Mon Nov 15 2021 13:41:42 GMT+0600 (Bangladesh Standard Time)</postedAt>
+                </data>
+            </data>
+            ```
        
     * Get A Single Story : `GET /api/v1/stories/:storyId`
+        -  Request Header
+            
+               Accept : application/json or application/xml
          - Valid Response
             
-             Status: 200 OK
-            
+               Status: 200 OK
+            JSON Response
             ```json
                 {
                     "status": "success",
@@ -53,12 +79,29 @@
                         "story": "What do you think about your world?...",
                         "author": "acquaman",
                         "postedAt": "2021-11-19T06:01:20.380Z"
+                    }
                 }
+            ```
+            XML Response
+            ```xml
+                 <?xml version='1.0'?>
+                 <data>
+                    <id>9</id>
+                    <title>Hello World</title>
+                    <story>Once upon a time.......</story>
+                    <author>acquaman</author>
+                    <postedAt>Mon Nov 15 2021 13:41:51 GMT+0600 (Bangladesh Standard Time)</postedAt>
+                </data>
+            ```
 
 ### 
 - **Authorized And Performed By User Himself** ( *jwt cookie must be included with request* )
 
    * Post A Story : `POST /api/v1/stories`
+
+        -  Request Header
+            
+               Accept : application/json or application/xml
         - Request Body
     
             ```json
@@ -70,7 +113,8 @@
 
         - Valid Response
             
-            Status: 201 Created
+              Status: 201 Created
+            JSON Response
             
             ```json
                 {
@@ -85,6 +129,17 @@
                     }
                 }
             ```
+            XML Response
+            ```xml
+            <?xml version='1.0'?>
+            <data>
+                <id>199</id>
+                <title>A cat and a dog</title>
+                <story>Once upon a time....... they lived in peach</story>
+                <author>RakibulRanak</author>
+                <postedAt>Thu Dec 09 2021 16:56:24 GMT+0600 (Bangladesh Standard Time)</postedAt>
+            </data>
+            ```
         - Valid Request Field Requirements:
             - title must be between 1 to 50 chars
             - description must be between 1 to 10000 chars
@@ -92,6 +147,9 @@
     &nbsp;
 
     * Update A Story : `PUT /api/v1/stories/:storyId`
+        -  Request Header
+            
+               Accept : application/json or application/xml
         - Request Body
             ```json
             {
@@ -116,6 +174,16 @@
                     }
                 }
             ```
+            ```xml
+            <?xml version='1.0'?>
+            <data>
+                <id>199</id>
+                <title>A cat and a dog</title>
+                <story>Once upon a time....... they lived in peach</story>
+                <author>RakibulRanak</author>
+                <postedAt>Thu Dec 09 2021 16:56:24 GMT+0600 (Bangladesh Standard Time)</postedAt>
+            </data>
+            ```
         - Valid Request Field Requirements:
             - title must be between 1 to 50 chars
             - description must be between 1 to 10000 chars
@@ -123,8 +191,8 @@
     &nbsp;
     * Delete  A Story : `DELETE /api/v1/stories/:storyId`
        
-        - Valid Respons
-             
+        - Valid Response
+
             Status: 204 No Content
             
             

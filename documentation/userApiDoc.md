@@ -4,6 +4,10 @@
 - **Without any authorization** ( must be logged out )
 
     * Sign Up  : `POST /api/v1/users`
+        -  Request Header
+            
+                Accept : application/json or application/xml
+            
         -  Request Body
             ```json
                 {
@@ -20,13 +24,13 @@
             - email can't be null
             - password must be between 8 to 15 chars
             - confirmPassword must match password
-        &nbsp;
+        
         &nbsp;
 
         - Valid Response
             
-            Status: 201 Created  
-            
+              Status: 201 Created  
+            JSON Response
             ```json
                 {
                     "status": "success",
@@ -37,6 +41,15 @@
                         "username": "aquaman"
                     }
                 }       
+            ```
+            XML Response
+            ```xml
+                <?xml version='1.0'?>
+                 <data>
+                        <email>acquatarek@gmail.com</email>
+                        <name>Md. Tarek</name>
+                        <username>aquaman</username>
+                </data>
             ```
             
         
@@ -54,8 +67,8 @@
         &nbsp;
         - Valid Response ( returns with a jwt cookie )
         
-            Status: 200 OK  
-            
+              Status: 200 OK  
+            JSON Response
             ```json
                 {
                     "status": "success",
@@ -66,6 +79,15 @@
                         "username": "aquaman"
                     }
                 }       
+            ```
+            XML Response
+            ```xml
+            <?xml version='1.0'?>
+            <data>
+                <email>rakibul05@student.sust.edu</email>
+                <name>Rakibul Hasan</name>
+                <username>RakibulRanak</username>
+            </data>
             ```
 
 
