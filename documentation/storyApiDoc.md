@@ -1,7 +1,7 @@
 ## Story Api Docs
 
 ### 
-- Without any authorization
+- **Without any authorization**
 
     * Get All Stories  : `GET /api/v1/stories`
         - Valid Response
@@ -56,15 +56,15 @@
                 }
 
 ### 
-- Authorized And Performed By User Himself ( *jwt cookie must be included with request* )
+- **Authorized And Performed By User Himself** ( *jwt cookie must be included with request* )
 
    * Post A Story : `POST /api/v1/stories`
         - Request Body
     
             ```json
             {
-            "title" : "Brave Lion",
-            "story" : "Once upon a time a lion lived in a jungle. ....."
+                "title" : "Brave Lion",
+                "story" : "Once upon a time a lion lived in a jungle. ....."
             }
             ```
 

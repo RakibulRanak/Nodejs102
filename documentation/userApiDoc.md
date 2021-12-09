@@ -1,7 +1,7 @@
 ## User Api Docs
 
 ### 
-- Without any authorization ( must be logged out )
+- **Without any authorization** ( must be logged out )
 
     * Sign Up  : `POST /api/v1/users`
         -  Request Body
@@ -58,7 +58,7 @@
 
 
 ### 
-- Authorized And Performed By User Himself
+- **Authorized And Performed By User Himself**
 
    * Log Out User : `GET /api/v1/users/logout`
 
