@@ -1,7 +1,7 @@
 # StoryHub backend
 
-> ### 
-    This repository serves as a backend for my StoryHub applcation which is a fullstack internship learning project at CEFALO. 
+# About 
+This repository serves as a backend for my StoryHub applcation which is a fullstack internship learning project at CEFALO. 
 
 # Getting Started
 
