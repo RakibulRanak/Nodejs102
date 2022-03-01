@@ -1,7 +1,7 @@
 # StoryHub backend
 
 # About 
-This repository serves as a backend for my StoryHub applcation which is a fullstack internship learning project at CEFALO. 
+This repository serves as a backend for my StoryHub applcation which is a fullstack internship learning project at CEFALO. You can visit the frontend part [here](https://github.com/RakibulRanak/story-client).
 
 # Getting Started
 
