@@ -17,10 +17,10 @@
 ## 5. Browsing
      go to http://localhost:6000/
 ** *to create a docker image with frontend static files, build folder  of the frontend repository has to be put in the root folder and process.env.NODE_ENV of the backend must has to be 'production'*
-structure:
-public
-    build
-    media
-        images
+## structure:
+    public
+        build
+        media
+            images
 
  
