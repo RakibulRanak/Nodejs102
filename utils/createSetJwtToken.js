@@ -6,15 +6,16 @@ exports.createSetJwtToken = (res, user) => {
         user: user.username
     };
     // var oneWeek = 7 * 24 * 3600 * 1000; //1 weeks       
-    const jwtToken = jwt.sign(payload, process.env.jwtSecret, { expiresIn: process.env.jwtSessionTokenExpire });
-    res.cookie('jwt', jwtToken, {
-        expires: new Date(
-            Date.now() + 3600 * 1000
-        ),
-        httpOnly: true
+    const accessToken = jwt.sign(payload, process.env.jwtSecret, { expiresIn: process.env.jwtSessionTokenExpire });
+    const refreshToken = 'sadfs'
+    // res.cookie('jwt', jwtToken, {
+    //     expires: new Date(
+    //         Date.now() + 3600 * 1000
+    //     ),
+    //     httpOnly: true
 
-    });
-    if (process.env.NODE_ENV === 'prooooductin')
-        cookieOptions.secure = true;
-    return;
+    // });
+    // if (process.env.NODE_ENV === 'prooooductin')
+    //     cookieOptions.secure = true;
+    return {accessToken,refreshToken};
 };

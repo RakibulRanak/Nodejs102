@@ -30,8 +30,8 @@ class UserService {
 
     loginUser = async (req, res) => {
         const user = await this.userDao.loginUser(req.body);
-        createSetJwtToken(res, user);
-        return user;
+        return createSetJwtToken(res, user);
+        
     };
 
     changeUserPassword = async (req, res) => {

@@ -43,8 +43,8 @@ exports.deleteUser = catchAsync(async (req, res, next) => {
 
 exports.loginUser = async (req, res, next) => {
     try {
-        const user = await userService.loginUser(req, res);
-        sendResponse(req, res, 200, user, 'User looged In successfully')
+        const tokens = await userService.loginUser(req, res);
+        sendResponse(req, res, 200, tokens, null)
     } catch (err) { next(err) }
 };
 
